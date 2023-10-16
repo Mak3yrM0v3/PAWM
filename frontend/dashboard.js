@@ -84,20 +84,14 @@ const DashboardScreen = () => {
       })
       .catch(error => console.log('error', error));
   };
-    // Function to open shortened url in browser
-  const openUrl = async (shortUrl) => {
-    try {
-      let response = await fetch(`http://localhost:3000/${shortUrl}`);
-        
-      if (response.ok) {
-        Linking.openURL(`http://localhost:3000/${shortUrl}`);
-      } else {
-        console.error('Server response:', response);
-      }
-    } catch (error) {
-        console.error('Error during the fetch operation : ', error);
-      }
-  };
+    // Function to open original url in browser
+const openUrl = (shortUrl) => {
+  // take the shortUrl and re-construct full URL
+  const fullShortUrl = `http://localhost:3000/${shortUrl}`;
+
+  // open the full short URL in the browser
+  Linking.openURL(fullShortUrl);
+};
    // Function to delete user account using API call
   const handleDeleteAccount = async () => {
     try {
@@ -155,8 +149,10 @@ const DashboardScreen = () => {
                   accessible={true} 
                   accessibilityRole="link" 
                   accessibilityHint={`Link to Shortened URL ${index + 1}`} 
+                  
                 >
-                  <Text style={styles.urlItem}>Shortened URL {index + 1}: {urlEntry.shortUrl}</Text>
+                  
+                  <Text style={[styles.urlItem, styles.urlItemLink]}>Shortened URL {index + 1}: {urlEntry.shortUrl}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                   onPress={() => deleteShortenUrl(urlEntry.shortUrl)} 
@@ -196,6 +192,7 @@ const styles = StyleSheet.create({
   urlList: { marginTop: 20 },
   urlItemContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
   urlItem: { flex: 0.9, paddingRight: 5 },
+  urlItemLink: { color: '#0000EE', textDecorationLine: 'underline' },
   deleteButton: { flex: 0.1, color: 'red', textAlign: 'center' },
 });
 
