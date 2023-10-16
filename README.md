@@ -1,2 +1,2 @@
 # PAWM
- Progetto Applicazioni App Web e Mobile
+ Progetto Programmazione App Web e Mobile
