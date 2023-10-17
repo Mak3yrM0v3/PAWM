@@ -114,6 +114,17 @@ const openUrl = (shortUrl) => {
       
     }
 };
+// Function to handle logout 
+const handleLogout = async () => {
+  try {
+    // Remove the JWT token from local storage
+    localStorage.removeItem('token');
+    // Navigate back to the Login page
+    navigation.navigate('Login');
+  } catch (error) {
+    console.error('Logout error:', error);
+  }
+};
   useEffect(() => {
     getShortenUrl();
   }, []);
@@ -163,19 +174,33 @@ const openUrl = (shortUrl) => {
                   <Text style={styles.deleteButton}>X</Text>
                 </TouchableOpacity>
               </View>
+              
             ))
           }
-          <TouchableOpacity 
-           style={styles.deleteAccountButton} 
-           onPress={handleDeleteAccount} 
-           accessible={true}
-           accessibilityLabel="Delete Account Button"
-           accessibilityRole="button"
-           accessibilityHint="Deletes your account and exits the application"
-         >
-           <Text style={styles.deleteAccountText}>Delete Account</Text>
-          </TouchableOpacity>
         </ScrollView>
+        <View style={styles.buttonContainer}>
+    <TouchableOpacity 
+        style={styles.redButton} 
+        onPress={handleLogout}
+        accessible={true}
+        accessibilityLabel="Logout Button"
+        accessibilityRole="button"
+        accessibilityHint="Logs you out from the website"
+    >
+        <Text style={styles.buttonText}>Logout</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity 
+        style={styles.redButton} 
+        onPress={handleDeleteAccount} 
+        accessible={true}
+        accessibilityLabel="Delete Account Button"
+        accessibilityRole="button"
+        accessibilityHint="Deletes your account and exits the application"
+    >
+      <Text style={styles.buttonText}>Delete Account</Text>
+    </TouchableOpacity> 
+  </View>
       </View>
     </View>
   );
@@ -183,7 +208,7 @@ const openUrl = (shortUrl) => {
 
 const styles = StyleSheet.create({
   page: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  container: { width: '33%', padding: 20 },
+  container: { width: '80%', padding: 20 },
   header: { fontSize: 24, textAlign: 'center', margin: 10 },
   inputLabel: { fontSize: 16, marginTop: 20 },
   input: { height: 40, borderColor: 'gray', borderWidth: 1 },
@@ -194,6 +219,9 @@ const styles = StyleSheet.create({
   urlItem: { flex: 0.9, paddingRight: 5 },
   urlItemLink: { color: '#0000EE', textDecorationLine: 'underline' },
   deleteButton: { flex: 0.1, color: 'red', textAlign: 'center' },
+  buttonContainer: {flexDirection: 'column', justifyContent: 'flex-start',alignItems: 'center', marginBottom: 10,marginTop: 20} ,
+  redButton: {backgroundColor: 'red', padding: 10, width: '100%',height: 40, alignItems: 'center', justifyContent: 'center',margin: 4},
+  buttonText: { color: 'white' },
 });
 
 export default DashboardScreen;
